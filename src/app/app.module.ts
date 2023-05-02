@@ -11,12 +11,16 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ButtonComponent } from './shared/button/button.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { Authenticated } from './services/guard';
+
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
     InputComponent,
     ButtonComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,7 @@ import { ButtonComponent } from './shared/button/button.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [Authenticated],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

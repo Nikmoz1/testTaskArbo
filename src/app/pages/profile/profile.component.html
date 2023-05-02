@@ -1,0 +1,22 @@
+<form [formGroup]="form" fxLayout="column" fxLayoutAlign="center center">
+  <app-input
+    label="Логін"
+    placeholder="Змінити свій логін"
+    [fGroup]="form"
+    myClass="col-md-3"
+    fControlName="username"
+  ></app-input>
+  <app-input
+    label="Пароль"
+    placeholder="Введіть email або ім'я"
+    [fGroup]="form"
+    myClass="col-md-3"
+    fControlName="password"
+  ></app-input>
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <app-button name="Вийти" (click)="logout()"> </app-button>
+
+    <app-button [disable]="!form.valid" name="Оновити" (click)="update()">
+    </app-button>
+  </div>
+</form>

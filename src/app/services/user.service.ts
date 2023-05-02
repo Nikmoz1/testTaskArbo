@@ -14,10 +14,17 @@ export class UserService {
   constructor(private _storeService: StoreService, private _router: Router) {}
 
   users = [{ username: 'admin', password: 'admin' }, {}];
+
+  getUser() {
+    this._storeService.get('user', (user) => {
+      return user;
+    });
+  }
+
   signIn(user: User) {
     if (this.check(user)) {
       this._storeService.set('user', user);
-      this._router.navigate(['/profile'])
+      this._router.navigate(['/profile']);
     } else {
       console.log('no login');
     }
