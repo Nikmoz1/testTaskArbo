@@ -11,9 +11,13 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ButtonComponent } from './shared/button/button.component';
-
 @NgModule({
-  declarations: [AppComponent, SignInComponent, InputComponent, ButtonComponent],
+  declarations: [
+    AppComponent,
+    SignInComponent,
+    InputComponent,
+    ButtonComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,7 +26,7 @@ import { ButtonComponent } from './shared/button/button.component';
     ReactiveFormsModule,
     MatInputModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

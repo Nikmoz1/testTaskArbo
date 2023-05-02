@@ -1,19 +1,18 @@
-<form [formGroup]="form" fxLayout="column" fxLayoutAlign="center center"> 
-    <app-input
-      label="Логін"
-      placeholder="Введіть свій логін"
-      [fGroup]="form"
-      myClass="col-md-3"
-      fControlName="login"
-    ></app-input>
-    <app-input
-      label="Пароль"
-      placeholder="Введіть email або ім'я"
-      [fGroup]="form"
-      myClass="col-md-3"
-      fControlName="password"
-    ></app-input>
-    <app-button name="Увійти" click="signIn()">
-
-    </app-button>
+<form [formGroup]="form" fxLayout="column" fxLayoutAlign="center center">
+  <app-input
+    label="Логін"
+    placeholder="Введіть свій логін"
+    [fGroup]="form"
+    myClass="col-md-3"
+    fControlName="username"
+  ></app-input>
+  <app-input
+    label="Пароль"
+    placeholder="Введіть email або ім'я"
+    [fGroup]="form"
+    myClass="col-md-3"
+    fControlName="password"
+  ></app-input>
+  <app-button [disable]="!form.valid" name="Увійти" (click)="signIn()">
+  </app-button>
 </form>

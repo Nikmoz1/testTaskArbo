@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,17 +10,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignInComponent {
   form!: FormGroup;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private _userService: UserService) {
     this.form = this._generateForm();
   }
   private _generateForm(): FormGroup {
     const form = this._fb.group({
-      login: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
-    return form
+    return form;
   }
-  signIn() {
-    
+  signIn() {    
+    const formData: User = {
+      username: this.form.value.username,
+      password: this.form.value.password,
+    };
+    this._userService.signIn(formData)
   }
 }
