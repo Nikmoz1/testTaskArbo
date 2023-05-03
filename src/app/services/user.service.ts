@@ -16,21 +16,22 @@ export interface MutateUser extends User {
 export class UserService {
   user!: User;
   users: User[] = [{ username: 'admin', password: 'admin' }];
-  existUsers!: User[];
 
   constructor(private _storeService: StoreService, private _router: Router) {
     _storeService.get('users', (userExist) => {
-      this.existUsers = userExist as User[];
+      if (!userExist) {
+        this.users = userExist as User[];
+        _storeService.set('users', this.users);
+      }
     });
-    if (!this.existUsers) {
-      _storeService.set('users', this.users);
-    }
   }
 
   getUser(): User {
     this._storeService.get('user', (user) => {
       this.user = user as User;
+      console.log(user);
     });
+
     return this.user;
   }
 
@@ -46,17 +47,10 @@ export class UserService {
   }
 
   check(user: User): User | boolean {
-    if (this.existUsers) {
-    }
-    const checkUser =
-      this.existUsers?.find(
-        (_user) =>
-          user.username === _user.username && user.password === _user.password
-      ) ||
-      this.users?.find(
-        (_user) =>
-          user.username === _user.username && user.password === _user.password
-      );
+    const checkUser = this.users.find(
+      (_user) =>
+        user.username === _user.username && user.password === _user.password
+    );
     if (checkUser) {
       console.log(checkUser);
 
@@ -65,24 +59,22 @@ export class UserService {
   }
 
   updateProfile(user: User) {
-    let users!: User[];
+    // this._storeService.get('users', (_users) => {
+    //   users = _users as User[];
+    // });
 
-    this._storeService.get('users', (_users) => {
-      users = _users as User[];
-    });
-
-    const userIndex = users.findIndex(
+    const userIndex = this.users.findIndex(
       (_user) => user.username === _user.username
     );
     if (userIndex !== -1) {
-      users.splice(userIndex, 1);
-      users.push(user);
-      this._storeService.set('users', users);
+      this.users.splice(userIndex, 1);
+      this.users.push(user);
+      this._storeService.set('users', this.users);
     }
 
     // let oldUser = users.find((_user) => (user.username = _user.username));
-
     this._storeService.set('user', user);
+    this.user = user;
   }
 
   logout(): void {

@@ -38,6 +38,5 @@ export class ProfileComponent {
       username: this.user.username
     };
     this._userService.updateProfile(formData);
-    this.user = this._userService.getUser();
   }
 }
