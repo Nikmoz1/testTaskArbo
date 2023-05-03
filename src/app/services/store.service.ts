@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  constructor() {}
+  constructor(private _router: Router) {}
 
   set(
     key: string,
@@ -43,5 +45,6 @@ export class StoreService {
   }
   clear(): void {
     localStorage.clear();
+    this._router.navigate(['/sign']);
   }
 }

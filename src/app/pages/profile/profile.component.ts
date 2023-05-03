@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/services/store.service';
-import { User, UserService } from 'src/app/services/user.service';
+import { MutateUser, User, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,26 +10,34 @@ import { User, UserService } from 'src/app/services/user.service';
 })
 export class ProfileComponent {
   form!: FormGroup;
-  user!: any;
-  constructor(private _storeService: StoreService, private _fb: FormBuilder, private _userService: UserService) {
-      this.user = this._userService.getUser();
+  user!: User;
+  existUsers = false
+  constructor(private _fb: FormBuilder, private _userService: UserService) {
+    this.user = this._userService.getUser();
 
     if (this.user) {
       this.form = this._generateForm(this.user);
     }
-
   }
 
-  private _generateForm(user: User): FormGroup {
+  private _generateForm(user: MutateUser): FormGroup {
     const form = this._fb.group({
-      username: [user ? user.username : '', Validators.required],
+      name: [user ? user.name : '', Validators.required],
       password: [user ? user.password : '', Validators.required],
     });
     return form;
   }
   logout() {
-
+    this._userService.logout();
   }
 
-  update() {}
+  update() {
+    const formData: MutateUser = {
+      name: this.form.value.name,
+      password: this.form.value.password,
+      username: this.user.username
+    };
+    this._userService.updateProfile(formData);
+    this.user = this._userService.getUser();
+  }
 }
