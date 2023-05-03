@@ -29,20 +29,17 @@ export class UserService {
   getUser(): User {
     this._storeService.get('user', (user) => {
       this.user = user as User;
-      console.log(user);
     });
 
     return this.user;
   }
 
-  signIn(user: User) {
+  signIn(user: User): void {
     const existUser = this.check(user);
     if (existUser) {
       this.user = existUser as User;
       this._storeService.set('user', existUser);
       this._router.navigate(['/profile']);
-    } else {
-      console.log('no login');
     }
   }
 
@@ -52,17 +49,11 @@ export class UserService {
         user.username === _user.username && user.password === _user.password
     );
     if (checkUser) {
-      console.log(checkUser);
-
       return checkUser;
     } else return false;
   }
 
   updateProfile(user: User) {
-    // this._storeService.get('users', (_users) => {
-    //   users = _users as User[];
-    // });
-
     const userIndex = this.users.findIndex(
       (_user) => user.username === _user.username
     );
@@ -72,7 +63,6 @@ export class UserService {
       this._storeService.set('users', this.users);
     }
 
-    // let oldUser = users.find((_user) => (user.username = _user.username));
     this._storeService.set('user', user);
     this.user = user;
   }
